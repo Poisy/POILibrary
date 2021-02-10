@@ -1,0 +1,58 @@
+@model BooksViewModel
+@{
+    ViewData["Title"] = "Books";
+}
+
+
+<h4>Number of Books: @Model.Books.Count</h4>
+<a class="btn btn-success" asp-action="AddBook">Add</a>
+<form asp-action="ShowSortedBooks">
+    <select id="sort" name="sort" value="@Model.SortMethod">
+        <option value="0">ID</option>
+        <option value="1">Title</option>
+        <option value="2">Author</option>
+        <option value="3">Pages</option>
+        <option value="4">Published</option>
+        <option value="5">Readed</option>
+        <option value="6">State</option>
+    </select>
+    <input type="text" name="search" placeholder="Search">
+    <button class="btn btn-success" type="submit">Go</button>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Pages</th>
+            <th scope="col">Published</th>
+            <th scope="col">Readed</th>
+            <th scope="col">State</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody id="test">
+        @foreach (var book in @Model.Books)
+        {
+            <tr>
+                <th scope="row">@book.ID</th>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Pages</td>
+                <td>@book.YearPublished</td>
+                <td>@book.YearReaded</td>
+                <td>@book.StateToString</td>
+                <td>
+                    <a class="btn btn-primary"
+                    asp-action="EditBook" asp-route-id="@book.ID">
+                    Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    document.getElementById("sort").selectedIndex = @Convert.ToInt32(Model.SortMethod)
+</script>

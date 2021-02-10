@@ -1,0 +1,52 @@
+@model BookViewModel
+@{
+    ViewData["Title"] = "Books";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        @if ((string)TempData["success"] == "true")
+        {
+            <p>@TempData["title"] Added Successfully!</p>
+        }
+    <form asp-action="AddBook">
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input class="form-control" asp-for="Title"/>
+            <span asp-validation-for="Title"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Pages"></label>
+            <input class="form-control" asp-for="Pages"/>
+            <span asp-validation-for="Pages"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Author"></label>
+            <input class="form-control" asp-for="Author"/>
+            <span asp-validation-for="Author"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="YearPublished"></label>
+            <input class="form-control" asp-for="YearPublished"/>
+            <span asp-validation-for="YearPublished"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="YearReaded"></label>
+            <input id="input-year-readed" class="form-control" asp-for="YearReaded" disabled/>
+            <span asp-validation-for="YearReaded"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="State"></label>
+            <select id="select-state" class="browser-default custom-select" asp-for="StateToString" asp-items="Model.States"></select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Add</button>
+        </div>
+    </form>
+    </div>
+</div>
+<script>
+    document.getElementById("select-state").onclick = () => {
+        document.getElementById("input-year-readed").disabled = document.getElementById("select-state").value != 'Finished';
+    }
+</script>
