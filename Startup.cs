@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Pomelo.EntityFrameworkCore.MySql;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 
 namespace POILibrary
@@ -49,9 +48,9 @@ namespace POILibrary
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            // POI: For DataBase connection to MySQL server
-            services.AddDbContextPool<ApplicationDbContext>(
-                option => option.UseMySql(Configuration.GetConnectionString("DefaultConnection"))
+            // POI: For DataBase connection to Sql server
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("poiLibraryDB"))
             );
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
